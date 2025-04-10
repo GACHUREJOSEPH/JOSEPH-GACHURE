@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Githeri with Avocado | Alex's Food Portfolio</title>
+    <meta name="description" content="Traditional Kenyan githeri with creamy avocado recipe">
+    <style>
+        /* Header and Footer Styles (Same as other pages) */
+        header {
+            background: #2d3436;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        header h1 {
+            color: #ffffff;
+            font-size: 1.8rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+            position: relative;
+        }
+        
+        nav a.active,
+        nav a:hover {
+            color: #74b9ff;
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #74b9ff;
+        }
+        
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            background: #2d3436;
+            color: #ffffff;
+            padding: 2.5rem 0;
+            margin-top: 3rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .social-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        /* Recipe Page Specific Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        .recipe-hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/githeri-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .recipe-hero h1 {
+            font-size: 3rem;
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .recipe-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            padding: 0 2rem;
+        }
+
+        .recipe-intro {
+            margin-bottom: 2rem;
+            font-style: italic;
+            color: #555;
+        }
+
+        .ingredients-card, .instructions-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .ingredients-card {
+            background: #f1f9ff;
+        }
+
+        .instructions-card {
+            background: #fff8f0;
+        }
+
+        h2 {
+            color: #2d3436;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #74b9ff;
+        }
+
+        h3 {
+            color: #0984e3;
+            margin: 1.5rem 0 1rem;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.8rem;
+        }
+
+        .nutrition-info {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .recipe-image {
+            width: 100%;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tips-section {
+            grid-column: 1 / -1;
+            background: #f5f5f5;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .recipe-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .recipe-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            nav ul {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: #2d3436;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: left 0.3s ease;
+            }
+            
+            nav ul.active {
+                left: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .recipe-hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Component -->
+    <header>
+        <div class="container">
+            <h1>Alex Developer</h1>
+            
+            <div class="mobile-menu-toggle">☰</div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="recipe1.html" class="active">Githeri & Avocado</a></li>
+                    <li><a href="recipe2.html">Mukimo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Recipe Hero Section -->
+    <section class="recipe-hero">
+        <div class="container">
+            <h1>Githeri with Avocado</h1>
+        </div>
+    </section>
+
+    <!-- Main Recipe Content -->
+    <main class="container">
+        <div class="recipe-container">
+            <div class="recipe-intro">
+                <p>A hearty and nutritious traditional Kenyan dish of boiled maize and beans, elevated with creamy avocado for extra richness. This wholesome meal is packed with protein and healthy fats, perfect for a satisfying lunch or dinner.</p>
+            </div>
+
+            <div class="ingredients-card">
+                <h2>Ingredients</h2>
+                <img src="images/githeri.jpg" alt="Githeri ingredients" class="recipe-image">
+                
+                <h3>Main Components</h3>
+                <ul>
+                    <li>2 cups dried maize (corn) kernels</li>
+                    <li>1 cup dried beans (red kidney or pinto)</li>
+                    <li>1 large red onion, diced</li>
+                    <li>2 ripe tomatoes, chopped</li>
+                    <li>2 cloves garlic, minced</li>
+                    <li>1 tablespoon vegetable oil</li>
+                    <li>1 teaspoon salt</li>
+                    <li>4 cups water</li>
+                </ul>
+
+                <h3>For Serving</h3>
+                <ul>
+                    <li>2 ripe avocados</li>
+                    <li>1 lemon (for juice)</li>
+                    <li>Fresh cilantro or parsley for garnish</li>
+                    <li>Chili flakes (optional)</li>
+                </ul>
+            </div>
+
+            <div class="instructions-card">
+                <h2>Instructions</h2>
+                <img src="images/githeri-cooking.jpg" alt="Cooking githeri" class="recipe-image">
+                
+                <h3>Preparation</h3>
+                <ol>
+                    <li>Rinse the maize and beans thoroughly under running water.</li>
+                    <li>Soak the maize and beans separately in plenty of water overnight (or at least 8 hours).</li>
+                    <li>Drain and rinse the soaked maize and beans.</li>
+                </ol>
+
+                <h3>Cooking</h3>
+                <ol>
+                    <li>In a large pot, combine the soaked maize and beans with 4 cups of water.</li>
+                    <li>Bring to a boil, then reduce heat to low, cover and simmer for 1 hour or until tender.</li>
+                    <li>In a separate pan, heat oil and sauté onions until translucent.</li>
+                    <li>Add garlic and tomatoes, cooking until tomatoes break down into a sauce.</li>
+                    <li>Add this mixture to the cooked maize and beans, stirring well.</li>
+                    <li>Season with salt and simmer for another 10 minutes.</li>
+                </ol>
+
+                <h3>Serving</h3>
+                <ol>
+                    <li>Cut avocados in half, remove pits, and slice flesh while still in skin.</li>
+                    <li>Scoop out avocado slices with a spoon and arrange on top of githeri.</li>
+                    <li>Squeeze fresh lemon juice over the avocado to prevent browning.</li>
+                    <li>Garnish with fresh cilantro or parsley.</li>
+                    <li>Serve hot with chili flakes on the side for those who prefer spice.</li>
+                </ol>
+            </div>
+
+            <div class="nutrition-info">
+                <h2>Nutritional Information</h2>
+                <p><strong>Per serving (1 bowl):</strong> Calories: 420 | Protein: 15g | Carbs: 60g | Fiber: 16g | Healthy Fats: 15g</p>
+            </div>
+
+            <div class="tips-section">
+                <h2>Chef's Tips</h2>
+                <ul>
+                    <li><strong>Time-saving:</strong> Use canned maize and beans to reduce cooking time to 20 minutes.</li>
+                    <li><strong>Variations:</strong> Add chopped spinach or kale for extra nutrients.</li>
+                    <li><strong>Storage:</strong> Keeps well in fridge for 3 days. Avocado is best added fresh when serving.</li>
+                    <li><strong>Traditional touch:</strong> Some Kenyans enjoy this with a side of fermented milk (mursik).</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Component -->
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com" target="_blank">GitHub</a>
+                <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                <a href="mailto:alex@example.com">Email</a>
+            </div>
+            <p>© 2023 Alex Developer. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle functionality
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
